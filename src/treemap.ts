@@ -25,13 +25,13 @@ export const buildLayout = (
     .round(true)
     .paddingInner(4)
     .paddingOuter(4)
-    .paddingTop(27);
-
-  const hierarchy = d3
+    .paddingTop((node) => (node.depth === 1 ? 27 : 4));
+    
+    const hierarchy = d3
     .hierarchy(root)
     .sum((d) => d.value ?? 0)
     .sort((a, b) => (b.value ?? 0) - (a.value ?? 0));
-
+    
   return layout(hierarchy);
 };
 

@@ -19,16 +19,24 @@ interface Props {
 
 export const TreemapTile = ({ x, y, width, height, label, value, labels, onClick, color, opacity }: Props) => {
   const theme = useTheme2().v1;
+  
+  let fontSize = theme.typography.size.base;
+  let topMargin = 20;
+  if (value) {
+    fontSize = Math.min(Math.max(Math.sqrt(width*height) * 0.1, 8), 30) + 'px';
+    topMargin = Math.min(Math.max(Math.sqrt(width*height) * 0.1, 10), 40);
+  } 
+  
 
   const styles = {
     text: css`
-      font-size: ${theme.typography.size.base};
+      font-size: ${fontSize};
       font-weight: 500;
     `,
   };
 
-  const textWidth = measureText(label, theme.typography.size.base)?.width ?? 0;
-  const margin = { top: 20, left: 10, bottom: 10, right: 10 };
+  const textWidth = measureText(label, fontSize )?.width ?? 0;
+  const margin = { top: topMargin, left: 5, bottom: 0, right: 0 };
 
   const textFitsHorizontally = textWidth + margin.left + margin.right < width;
   const textFitsVertically = margin.top + margin.bottom < height;
